@@ -10,7 +10,7 @@ class AddPage extends ConsumerStatefulWidget {
 }
 
 class _AddPageState extends ConsumerState<AddPage> {
-  TextEditingController medicine_name = TextEditingController();
+  TextEditingController medicineName = TextEditingController();
 
   bool? morning = false;
   bool? afternoon = false;
@@ -18,107 +18,125 @@ class _AddPageState extends ConsumerState<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text("Medicine Name:", style: TextStyle(fontSize: 18)),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: TextField(
-                    controller: medicine_name,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 250,
+
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 228, 227, 226),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [BoxShadow(blurRadius: 5, blurStyle: BlurStyle.solid)],
+          ),
+
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30, left: 10, right: 8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("Medicine Name:", style: TextStyle(fontSize: 18)),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: TextField(
+                          controller: medicineName,
+                          decoration: InputDecoration(
+                            hintText: "Add Medicine",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                SizedBox(height: 20),
+
+                Row(
+                  spacing: 40,
+                  children: [
+                    Row(
+                      children: [
+                        Text("Morning"),
+                        Checkbox(
+                          value: morning,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              morning = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        Text("Afternoon"),
+                        Checkbox(
+                          value: afternoon,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              afternoon = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        Text("Night"),
+                        Checkbox(
+                          value: night,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              night = value;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: FilledButton(
+                    onPressed: () {
+                      final newList = {
+                        "medicineName": medicineName.text,
+                        "isMorning": morning,
+                        "isAfternoon": afternoon,
+                        "isNight": night,
+                        "isTaken": false,
+                      };
+
+                      if (medicineName.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: Duration(milliseconds: 800),
+                            content: Text("Check the field"),
+                          ),
+                        );
+                      } else {
+                        ref.read(medicineListProvider).add(newList);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: Duration(milliseconds: 800),
+                            content: Text("Added Succesfully"),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text("Add"),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-
-          Row(
-            spacing: 40,
-            children: [
-              Row(
-                children: [
-                  Text("Morning"),
-                  Checkbox(
-                    hoverColor: Colors.red,
-                    value: morning,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        morning = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Text("Afternoon"),
-                  Checkbox(
-                    hoverColor: Colors.red,
-                    value: afternoon,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        afternoon = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-
-              Row(
-                children: [
-                  Text("Night"),
-                  Checkbox(
-                    hoverColor: Colors.red,
-                    value: night,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        night = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Center(
-            child: FilledButton(
-              onPressed: () {
-                final newList = {
-                  "medicine_name": medicine_name.text,
-                  "isMorning": morning,
-                  "isAfternoon": afternoon,
-                  "isNight": night,
-                };
-                ref.read(medicineListProvider).add(newList);
-
-                if (medicine_name.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      duration: Duration(seconds: 1),
-                      content: Text("Check the field"),
-                    ),
-                  );
-                }
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text("Added Succesfully")));
-              },
-              child: Text("Add"),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
