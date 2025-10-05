@@ -17,8 +17,11 @@ class _WidgetpageState extends State<Widgetpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Medicine Tracker"), centerTitle: true),
-
+      appBar: AppBar(
+        //   backgroundColor: const Color(0xFFCBDFE9),
+        title: select_index == 0 ? Text("Today's Schedules") : Text(""),
+        centerTitle: true,
+      ),
       body: pages[select_index],
       bottomNavigationBar: NavigationBar(
         selectedIndex: select_index,
