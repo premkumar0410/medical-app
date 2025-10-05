@@ -59,8 +59,8 @@ class _HomepageState extends ConsumerState<Homepage> {
                                 ),
                               ),
                               medItem["isTaken"]
-                                  ? Icon(Icons.timelapse_outlined, size: 30)
-                                  : Icon(Icons.done_all_rounded, size: 30),
+                                  ? Icon(Icons.done_all_rounded, size: 30)
+                                  : Icon(Icons.timelapse_outlined, size: 30),
                             ],
                           ),
                           SizedBox(height: 30),
@@ -94,11 +94,11 @@ class _HomepageState extends ConsumerState<Homepage> {
                                     });
                                   },
                                   child: medItem["isTaken"]
-                                      ? Text(
+                                      ? Text("Taken")
+                                      : Text(
                                           "Mark as Taken",
                                           style: TextStyle(fontSize: 15),
-                                        )
-                                      : Text("Taken"),
+                                        ),
                                 ),
                               ],
                             ),
