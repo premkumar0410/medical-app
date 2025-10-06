@@ -121,6 +121,7 @@ class _AddPageState extends ConsumerState<AddPage> {
               onPressed: () {
                 final newList = {
                   "medicineName": medicineName.text,
+                  
                   "isMorning": morning,
                   "isAfternoon": afternoon,
                   "isNight": night,

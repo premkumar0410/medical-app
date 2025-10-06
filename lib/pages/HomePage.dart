@@ -371,9 +371,26 @@ class _HomepageState extends ConsumerState<Homepage> {
                       children: [
                         FilledButton(
                           onPressed: () {
+                            final history = ref.read(hinstoryListProvider);
+
+                            final historyadd = [
+                              ...history,
+                              {...item, "isRestore": true},
+                            ];
+
+                            ref.read(hinstoryListProvider.notifier).state =
+                                historyadd;
+
+                            final currentList = ref.read(medicineListProvider);
+                            final updatedlist = [...currentList]..remove(item);
+
+                            ref.read(medicineListProvider.notifier).state =
+                                updatedlist;
+
                             Navigator.pop(context);
+                            print(historyadd);
                           },
-                          child: Text("Cancel"),
+                          child: const Text("Delete"),
                         ),
                         FilledButton(
                           onPressed: () {
